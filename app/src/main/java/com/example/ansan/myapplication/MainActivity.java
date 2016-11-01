@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.File;
@@ -18,16 +19,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
+
+    EditText et1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
+        et1=(EditText)findViewById(R.id.editText);
     }
-
-
-
 
     public void onclick (View v){
 
@@ -85,13 +84,23 @@ public class MainActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                Toast.makeText(getApplication(),"폴더삭제완료",Toast.LENGTH_SHORT).show();
+
                 break;
 
 
-
-
-
+            case R.id.button:  // 폴더 목록가져오기
+                String str= "";
+                         File[] filelist = new File(strpath).listFiles();
+                for( int i = 0; i< filelist.length; i++){
+                    if(filelist[i].isDirectory()) {
+                        str += "<폴더>" + filelist[i].toString() + "Wn";
+                    }
+                    else {
+                        str += "<파일>" + filelist[i].toString() + "Wn";
+                    }
+                }
+                et1.setText(str);
+                break;
         }
 
     }

@@ -8,7 +8,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.ansan.myapplication.MainActivity">
+    tools:context="com.example.ansan.myapplication.MainActivity"
+    android:weightSum="1">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -51,4 +52,17 @@
             android:text="SDCARD파일읽기"
             android:id="@+id/button7" />
     </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="파일 목록 가져오기"
+        android:id="@+id/button" />
+
+    <TextView
+        android:layout_width="358dp"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/textView"
+        android:layout_weight="1.11" />
 </LinearLayout>

@@ -26,62 +26,80 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
+
     public void onclick (View v){
-        if(isStoragePermissionGranted()== false)
-        {
+
+        if(isStoragePermissionGranted()== false) {
             Toast.makeText(getApplication(),"SD카드사용 에러",Toast.LENGTH_SHORT).show();
             return;
         }
         String strpath = Environment.getExternalStorageDirectory().getAbsolutePath();
-        //폴더 생성
-        if(v.getId()== R.id.button4){
-            File mydir = new File(strpath+"/dabin");
-            mydir.mkdir();
-            Toast.makeText(getApplication(),"폴더생성완료",Toast.LENGTH_SHORT).show();
+    String folder = strpath +"/dabin";
+        String filename = folder + "/test.txt";
+        File mydir = new File(folder);
+
+        switch (v.getId()){
+            case R.id.button4:
+
+                mydir.mkdir();
+                Toast.makeText(getApplication(),"폴더생성완료",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.button5:
+
+                mydir.delete();
+                Toast.makeText(getApplication(),"폴더삭제완료",Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.button6:
+
+                try {
+                    FileOutputStream fos = new FileOutputStream(filename);
+                    fos.write("안녕하세요".getBytes());
+                    fos.close();
+
+                    Toast.makeText(getApplication(),"파일생성성공",Toast.LENGTH_SHORT).show();
+                } catch (FileNotFoundException e) {
+                    Toast.makeText(getApplication(),"파일생성실패",Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplication(),"파일생성실패",Toast.LENGTH_SHORT).show();
+                }
+                break;
+
+            case R.id.button7:
+
+                try {
+                    FileInputStream fos = new FileInputStream(filename);
+                    byte arr[] =new byte[fos.available()];
+                    fos.read(arr);
+                    fos.close();
+                    String str = new String(arr);
+                    Toast.makeText(getApplication(),"파일내용"+str+"성공",Toast.LENGTH_SHORT).show();
+
+                } catch (FileNotFoundException e) {
+                    Toast.makeText(getApplication(),"파일읽기실패",Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Toast.makeText(getApplication(),"폴더삭제완료",Toast.LENGTH_SHORT).show();
+                break;
+
+
+
+
+
         }
-        else if(v.getId()== R.id.button5){
-            File mydir = new File(strpath+"/dabin");
-            mydir.delete();
-            Toast.makeText(getApplication(),"폴더삭제완료",Toast.LENGTH_SHORT).show();
-        }
-        else if(v.getId()== R.id.button6){
-            String filename = strpath+"/test.txt";
-            try {
-                FileOutputStream fos = new FileOutputStream(filename);
-                fos.write("안녕하세요".getBytes());
-                fos.close();
-
-                Toast.makeText(getApplication(),"파일생성성공",Toast.LENGTH_SHORT).show();
-            } catch (FileNotFoundException e) {
-                Toast.makeText(getApplication(),"파일생성실패",Toast.LENGTH_SHORT).show();
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-                Toast.makeText(getApplication(),"파일생성실패",Toast.LENGTH_SHORT).show();
-            }
-
-        }
-        else if(v.getId()== R.id.button7){
-            String filename = strpath+"/test.txt";
-            try {
-                FileInputStream fos = new FileInputStream(filename);
-                byte arr[] =new byte[fos.available()];
-                fos.read(arr);
-                fos.close();
-                String str = new String(arr);
-                Toast.makeText(getApplication(),"파일내용"+str+"성공",Toast.LENGTH_SHORT).show();
-
-            } catch (FileNotFoundException e) {
-                Toast.makeText(getApplication(),"파일읽기실패",Toast.LENGTH_SHORT).show();
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }
-
 
     }
+
+
+
+
+
 
     String TAG = "[TEST]";
     public  boolean isStoragePermissionGranted() {
